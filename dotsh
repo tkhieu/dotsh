@@ -1097,49 +1097,7 @@ main@bashbox%dotsh ()
         declare cmd="$1" res;
         res="$(command -v "$cmd")" && test -x "$res"
     };
-    function await::until_true () 
-    { 
-        local time="${TIME:-0.5}";
-        local input=("$@");
-        until "${input[@]}"; do
-            { 
-                sleep "$time"
-            };
-        done
-    };
-    function await::while_true () 
-    { 
-        local time="${TIME:-0.5}";
-        local input=("$@");
-        while "${input[@]}"; do
-            { 
-                sleep "$time"
-            };
-        done
-    };
-    function await::for_file_existence () 
-    { 
-        local file="$1";
-        await::until_true test -e "$file"
-    };
-    function await::signal () 
-    { 
-        local kind="$1";
-        local target="$2";
-        local status_file="/tmp/.asignal_${target}";
-        case "$kind" in 
-            "get")
-                until test -s "$status_file"; do
-                    { 
-                        sleep 0.2
-                    };
-                done
-            ;;
-            send)
-                printf 'done\n' >> "$status_file"
-            ;;
-        esac
-    };
+    clearuse std::async::await;
     function await::for_vscode_ide_start () 
     { 
         if grep -q 'supervisor' /proc/1/cmdline; then
@@ -3143,13 +3101,13 @@ EOF
         exit
     };
     export PATH="$PATH:$HOME/.local/bin:/ide/bin/remote-cli:$HOME/.nix-profile/bin";
-    declare dotfiles_repos=(https://github.com/axonasif/dotfiles.public);
+    declare dotfiles_repos=(https://github.com/tkhieu/dotfiles);
     if test -n "${DOTFILES_REPOS:-}"; then
         { 
             dotfiles_repos=(${DOTFILES_REPOS})
         };
     fi;
-    : "${DOTFILES_SHELL:=fish}";
+    : "${DOTFILES_SHELL:=zsh}";
     declare -r fish_confd_dir="$HOME/.config/fish/conf.d";
     declare -r fish_hist_file="$HOME/.local/share/fish/fish_history";
     declare fish_plugins+=(PatrickF1/fzf.fish jorgebucaran/fisher axonasif/bashenv.fish);
@@ -3158,7 +3116,7 @@ EOF
     declare -r tmux_first_session_name="gitpod";
     declare -r tmux_first_window_num="1";
     : "${DOTFILES_SPAWN_SSH_PROTO:=true}";
-    : "${DOTFILES_NO_VSCODE:=false}";
+    : "${DOTFILES_NO_VSCODE:=true}";
     : "${DOTFILES_EDITOR:=neovim}";
     : "${DOTFILES_EDITOR_PRESET:=lunarvim}";
     declare nixpkgs_level_1+=(nixpkgs.ripgrep nixpkgs.fd nixpkgs.fzf);

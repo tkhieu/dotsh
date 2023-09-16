@@ -1,4 +1,4 @@
-use std::async::await;
+clearuse std::async::await;
 
 function await::for_vscode_ide_start() {
 	if grep -q 'supervisor' /proc/1/cmdline; then {

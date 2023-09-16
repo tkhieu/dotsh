@@ -14,7 +14,7 @@ export PATH="$PATH:$HOME/.local/bin:/ide/bin/remote-cli:$HOME/.nix-profile/bin";
 declare dotfiles_repos=(
     # Defaults to an example template repo, you may remove below line and put your own or not use any at all!
     # If you do not have your own repo yet, you can fork this one as the starting point ;)
-    https://github.com/axonasif/dotfiles.public
+    https://github.com/tkhieu/dotfiles
 )
 # Overwrite if the DOTFILES_REPOS environment variable is set
 if test -n "${DOTFILES_REPOS:-}"; then {
@@ -26,7 +26,7 @@ if test -n "${DOTFILES_REPOS:-}"; then {
 # = SHELL                                         =
 # =================================================
 # Defaults to fish
-: "${DOTFILES_SHELL:=fish}";
+: "${DOTFILES_SHELL:=zsh}";
 # =================================================
 # = FISH SHEL                                     =
 # =================================================
@@ -59,7 +59,7 @@ declare -r tmux_first_window_num="1";
 # When the below option is true, VSCode will be
 # killed after you've established a SSH connection
 # with the workspace to save RAM and CPU.
-: "${DOTFILES_NO_VSCODE:=false}";
+: "${DOTFILES_NO_VSCODE:=true}";
 
 
 # =================================================
